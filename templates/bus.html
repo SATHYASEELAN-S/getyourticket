@@ -1,0 +1,300 @@
+{%extends 'main.html'%}
+{%load static%}
+<!-- <table style="border: 2px solid black; width: 100%; text-align: left;">
+
+        <tr>
+            <th style="border: 2px solid black;">Bus Name</th>
+            <th style="border: 2px solid black;">Bus Number</th>
+            <th style="border: 2px solid black;">Start Place</th>
+            <th style="border: 2px solid black;">Destination</th>
+        </tr>
+      
+        {% for bus_instance in bus %}
+            <tr>
+                <td>{{ bus_instance.busname }}</td>
+                <td>{{ bus_instance.busno }}</td>
+                <td>{{ bus_instance.start_place }}</td>
+                <td>{{ bus_instance.destination }}</td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <th style="border: 2px solid black; text-align: left;">Stops</th>
+        </tr>
+      
+        {% for s in stops %}
+            <tr>
+                <td>{{ s.stopname }}</td>
+            </tr>
+        {% endfor %}
+      
+    </table> -->
+
+
+{%block content%}
+
+
+<div class="container  vh-100  d-flex justify-content-center align-items-center ">
+    <div class="home-content mt-5 d-flex justify-content-center h-75 align-items-center  ">
+
+        <div class="d-flex justidy-content-center align-items-center   row">
+            <div class="col-12 ">
+                <div class="d-flex mb-2 justidy-content-center align-items-center " style="flex-direction: column;">
+                    {% for bus in bus %}
+                    <h5>Bus no: {{bus.bus_no}}</h5>
+                    <h5>Bus Name: {{bus.bus_name}} </h5>
+                    {% endfor %}
+                </div>
+                 {% if travel.reverse ==  False %}
+                <form action="" id="busForm">
+
+                   
+                    <div class="form-group">
+                        <label for="from">From</label>
+                        <select class="form-control" id="from" onchange="updateOptions()">
+                            <option>{{travel.start_place}}</option>
+
+                            {% for stop in stops%}
+                            <option>{{stop.stopname}}</option>
+
+                            {%endfor%}
+
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-2 mt-2">
+                        <label for="to">To</label>
+                        <select class="form-control" id="to">
+                            {% for stop in stops%}
+                            <option>{{stop.stopname}}</option>
+                            {%endfor%}
+                            <option>{{travel.destination}}</option>
+                        </select>
+
+                    </div>
+                   
+                    <div class="form-group mb-2">
+                        <label for="ticket">Ticket</label>
+                        <input type="number" class="form-control" id="ticket" required min="1" pattern="\d+" title="Please enter a positive integer">
+
+                        <!-- <input type="number" class="form-control" id="seats" required > -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Price">Price</label>
+                        <p type="number" disabled class="form-control" id="price">₹0</p>
+                    </div>
+                    <input type="submit" value="Pay" class="btn w-100 price-btn">
+                </form>
+
+                {%else%}
+
+
+                <form action="" id="busForm">
+
+                   
+                    <div class="form-group">
+                        <label for="from">From</label>
+                        <select class="form-control" id="from" onchange="updateOptions()">
+                            <option>{{travel.destination}}</option>
+                            {% for stop in stops reversed %}
+                            <option>{{ stop.stopname }}</option>
+                        {% endfor %}
+                        
+
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-2 mt-2">
+                        <label for="to">To</label>
+                        <select class="form-control" id="to">
+                            {% for stop in stops reversed%}
+                            <option>{{stop.stopname}}</option>
+                            
+
+                            {%endfor%}
+                            <option>{{travel.start_place}}</option>
+                        </select>
+
+                    </div>
+                   
+                    <div class="form-group mb-2">
+                        <label for="ticket">Ticket</label>
+                        <input type="number" class="form-control" id="ticket" required min="1" pattern="\d+" title="Please enter a positive integer">
+
+                        <!-- <input type="number" class="form-control" id="seats" required > -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Price">Price</label>
+                        <p  disabled class="form-control" id="price">₹0</p>
+                    </div>
+                    <input type="submit" value="Pay" class="btn w-100 price-btn">
+                </form>
+                {%endif%}
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<script src="{% static 'js/options.js' %}"></script>
+
+<script>
+    var originalStopkm = [
+        {% for stop in stops %}
+            {{ stop.km }},
+        {% endfor %}
+    ];
+    var stops = [
+    {% for stop in stops %}
+        { "stopname": "{{ stop.stopname }}", "km": {{ stop.km }} },
+
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}
+];
+
+    originalStopkm.pop();
+
+    $(document).ready(function () {
+            $('#busForm').click(function () {
+            
+
+            var fromValue = $('#from').val();
+            var toValue = $('#to').val();
+            var flag=false;
+            var tokm;
+            var reverse=false;
+            var fromstop="{{travel.start_place}}";
+            var tostop="{{travel.destination}}";
+            {% if travel.reverse == True  %}
+
+                reverse=true;
+                 tostop="{{travel.start_place}}";
+ fromstop ="{{travel.destination}}";
+            {%endif%}
+
+            
+            // Assuming stops is a JavaScript variable containing the stops data
+          
+            if(reverse==false)
+            { 
+            stops.forEach(function(stop) {
+                if (stop.stopname == toValue) {
+                 
+                    flag=true;
+                     tokm=stop.km;
+                }
+        
+            });
+        }else{
+
+            if(fromstop==fromValue)
+            {
+                stops.forEach(function(stop) {
+                    if (stop.stopname == toValue) {
+                     
+                        flag=true;
+                         tokm={{travel.km}}-stop.km;
+                    }
+            
+                });
+            }else{
+
+            
+
+            stops.forEach(function(stop) {
+                if (stop.stopname == toValue) {
+                 
+                    flag=true;
+                     tokm=stop.km;
+                }
+        
+            });
+        }
+        }
+
+            stops.forEach(function(stop) {
+            if (stop.stopname == fromValue) {
+
+                if(reverse==false)
+               {
+                tokm= tokm - stop.km;
+
+               }else{
+                tokm=  stop.km-tokm;
+                
+
+               }
+                
+            }
+            
+        }); 
+        
+
+        if (!flag){
+            
+        if(reverse==false)
+        {
+           
+            if (fromValue==fromstop && toValue == tostop)
+            {
+            
+                tokm={{travel.km}};
+            }
+            else if(toValue == tostop) {
+                stops.forEach(function(stop) {
+                    if (stop.stopname == fromValue) {
+                       tokm= {{travel.km}} -stop.km;
+                        
+                    }
+                    
+                }); 
+            }
+        }
+     else if(reverse==true){
+
+        
+      
+          if (fromValue==fromstop && toValue == tostop)
+            {
+                tokm={{travel.km}};
+
+
+            }
+            else if(toValue == tostop) {
+                stops.forEach(function(stop) {
+                    if (stop.stopname == fromValue) {
+                       tokm= stop.km;
+                        
+                    }
+                    
+                }); 
+            }
+        
+    }
+}
+        
+        
+        var seats = $('#ticket').val();
+        var price;
+        if(tokm>10)
+        {
+                         price=seats*15;
+        }else if(tokm<=10){
+             price=seats*10;
+        }
+        document.getElementById('price').innerHTML = "₹"+ price;
+
+
+
+        });
+    });
+
+</script>
+
+
+{%endblock%}

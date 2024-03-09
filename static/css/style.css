@@ -1,0 +1,223 @@
+
+
+
+@font-face {
+  font-family: "Optimistic Display";
+  src: url("../font/OptimisticDisplayLight-199be98cf48e5b4c688356b08a02362c.woff2")
+    format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Optimistic Display";
+  src: url("../font/OptimisticDisplayRegular-b0e4e99f91efd0021c3ab8e4df0e6e1b.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Optimistic Display";
+  src: url(" ../font/OptimisticDisplayBold-3a50548145f36de582c3b36d9626f4d6.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+  
+  body {
+    background-color: aliceblue;
+    font-family: "Optimistic Display" !important; 
+  }
+  
+  /* h1{
+    font-size: 84px;
+    font-weight: 500;
+  }
+  h2{
+    font-size: 25px;
+    font-weight: 700;
+  }
+  p{
+    font-size: 17px;
+    font-weight: 300;
+  } */
+
+
+/* register and login*/
+
+
+h5{
+  font-size: 19px;
+  font-weight: 700;
+}
+
+
+
+
+.modal-full {
+  width: 75vw !important;
+  max-width: 100% !important;
+  /* margin: auto !important; */
+
+
+}
+
+.modal-full .modal-content {
+  height: 75vh !important;
+  /* border: none !important; */
+  border-radius: 20px !important;
+  
+}
+.underline-text {
+  font-weight: 700 !important;
+  font-size: 20px !important;
+}
+
+
+@media (max-width:598px) {
+  .modal-full {
+      margin: auto !important;
+  }
+}
+
+@media (max-width:395px) {
+  .modal-full {
+      width: 95vw !important;
+      max-width: 100% !important;
+      margin: auto !important;
+  }
+  
+  .modal-full .modal-content {
+      height: 90vh !important;
+      border: none !important;
+      border-radius: 20px !important;
+  }
+  
+}
+
+  /* navbar */
+  .navbar{
+    background-color: #20232a;
+  }
+  .brand-svg{
+    transition: all 0.6s ease !important;
+   
+  }
+  .brand-svg:hover {
+    transform: rotate(180deg) !important;
+  }
+  .brand:hover .brand-svg {
+    transform: rotate(180deg) !important;
+}
+
+
+  .nav-link{
+    color: rgb(255, 255, 255) !important;
+    font-family: 'Optimistic Display' !important;
+  font-size: 17px !important;
+  font-weight: 400;
+ }
+
+
+
+ /* search modal start  */
+ .btn-search {
+  transition: all 0.4s ease;
+  background-color: #ebedf0 !important;
+  border-radius: 10px !important;
+  border: 4px solid  transparent !important; 
+}
+
+.btn-search:hover {
+  border: 4px solid #06bcee !important;
+}
+
+.btn-search:hover .text-search {
+  color: black !important;
+}
+
+@media (min-width:992px) {
+  .DocSearch-Search-Icon{
+    margin: 3px !important;
+   }  
+}
+
+@media (max-width:992px) {
+ .nav-link{
+  color: rgb(0, 0, 0) !important;
+ }
+ 
+
+}
+
+.search-modal{
+  background-color: #f5f6f7 !important;
+}
+
+ /* search modal end note qr also in the search modal   */
+
+
+/* ticket booking start  */
+
+.home-content{
+  width: 500px !important;
+  height: 500px  !important;
+  border-radius: 10px !important;
+  background-color: white !important; 
+  /* box-shadow: 0.1px 0.1px black !important ; */
+}
+
+h5{
+  font-size: 19px;
+  font-weight: 700; 
+}
+
+
+/* .form-group .form-control {
+  background-color:#282c34 !important;
+  color: white !important;
+} */
+
+/* ticket booking end */
+
+
+
+
+/* qrcode start  */
+
+.html5-qrcode-element, .register-btn,  .login-btn, .price-btn{
+  background-color: #ffffff; 
+  border: 1px solid  #20232a ;
+  color:  #20232a; 
+  padding: 10px; /* Adjust padding as needed */
+  text-align: center;
+  margin-top: 5px;
+  text-decoration: none !important;
+  display: inline-block;
+  font-size: 16px; /* Adjust font size as needed */
+  cursor: pointer;
+  border-radius: 5px; /* Optional: Add rounded corners */
+}
+
+/* Hover state */
+.html5-qrcode-element:hover,.register-btn:hover,  .login-btn:hover, .price-btn:hover {
+  background-color: #20232a;
+  border: 1px solid   #20232a;
+  color: #ffffff; 
+}
+
+/* Active state */
+.html5-qrcode-element:active {
+  background-color: #ffffff; 
+  border: 1px solid  #20232a; 
+  color:  #20232a;   
+}
+
+/* 
+#reader{
+  border: 0px solid black !important;
+} */
+
+
+/* qrcode end  */

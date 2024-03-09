@@ -1,0 +1,341 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+
+        {%block title %}
+
+        {%endblock%}
+    </title>
+
+
+    {%block link %}
+
+    {%endblock%}
+
+    <script src="{% static 'qrcode/node_modules/html5-qrcode/html5-qrcode.min.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+
+
+
+</head>
+
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg">
+        <div class="container">
+            <div class="brand d-flex justify-content-center align-items-center ">
+                <a href="#"><svg class="brand-svg me-1" xmlns="http://www.w3.org/2000/svg" height="32" width="36"
+                        viewBox="0 0 576 512">
+                        <path fill="#ffffff"
+                            d="M64 64C28.7 64 0 92.7 0 128v64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320v64c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V320c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4c8.3-2.9 15.7-9.8 15.7-18.6V128c0-35.3-28.7-64-64-64H64zm64 112l0 160c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16V176c0-8.8-7.2-16-16-16H144c-8.8 0-16 7.2-16 16zM96 160c0-17.7 14.3-32 32-32H448c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V160z" />
+                    </svg></a>
+                <a class="navbar-brand text-white" href="#"> Get Your Ticket</a>
+
+            </div>
+            <button class="navbar-toggler ms-auto shadow-none border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <svg xmlns="http://www.w3.org/2000/svg" height="32" width="28" viewBox="0 0 448 512">
+                    <path fill="#ffffff"
+                        d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
+                </svg>
+            </button>
+
+            <div class="offcanvas bg-white offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <div class="brand d-flex justify-content-center align-items-center ">
+                        <a href=""><svg class="brand-svg me-1" xmlns="http://www.w3.org/2000/svg" height="32" width="36"
+                                viewBox="0 0 576 512">
+                                <path fill="#20232a"
+                                    d="M64 64C28.7 64 0 92.7 0 128v64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320v64c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V320c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4c8.3-2.9 15.7-9.8 15.7-18.6V128c0-35.3-28.7-64-64-64H64zm64 112l0 160c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16V176c0-8.8-7.2-16-16-16H144c-8.8 0-16 7.2-16 16zM96 160c0-17.7 14.3-32 32-32H448c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V160z" />
+                            </svg></a>
+                        <a class="navbar-brand " href=""> Get Your Ticket</a>
+
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <!-- <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-dismiss="offcanvas"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link"></a>
+                        </li> -->
+                        {% if not request.user.is_authenticated%}
+                        <li class="nav-item">
+                            <a href="#" id="registerbutton" class="nav-link">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" id="loginbutton" class="nav-link">Login</a>
+                        </li>
+                        {%else%}
+                        <li class="nav-item">
+                            <a href="{% url 'user:logout' %}" class="nav-link">Logout</a>
+                        </li>
+                        {%endif %}
+                    </ul>
+                    {% if request.user.is_authenticated%}
+                    <div class="nav-item d-flex align-items-center ms-1 me-1 dropdown">
+                        <svg aria-expanded="false" xmlns="http://www.w3.org/2000/svg" height="24" width="21"
+                            viewBox="0 0 448 512">
+                            <path fill="#ffffff"
+                                d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+                        </svg>
+
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+            <div class="search d-flex align-items-center">
+                <button data-bs-toggle="modal" data-bs-target="#searchModal"
+                    class=" btn-search shadow-none d-flex form-control" style="flex-direction: row;">
+                    <svg width="20" height="20" class="DocSearch-Search-Icon " viewBox="0 0 20 20">
+                        <path
+                            d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+                            stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="text-muted d-none d-lg-block   text-search   me-3">search</span>
+                </button>
+            </div>
+        </div>
+        </div>
+
+
+    </nav>
+    <div class="modal  fade" id="searchModal" tabindex="-1" data-bs-backdrop="static"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content search-modal ">
+
+                <div class="modal-header">
+                    <button class="border-0">
+                        <svg class="qrscanner " xmlns="http://www.w3.org/2000/svg" height="41" width="37"
+                            viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path
+                                d="M0 80C0 53.5 21.5 32 48 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80zM64 96v64h64V96H64zM0 336c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V336zm64 16v64h64V352H64zM304 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H304c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48zm80 64H320v64h64V96zM256 304c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s7.2-16 16-16s16 7.2 16 16v96c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s-7.2-16-16-16s-16 7.2-16 16v64c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V304zM368 480a16 16 0 1 1 0-32 16 16 0 1 1 0 32zm64 0a16 16 0 1 1 0-32 16 16 0 1 1 0 32z" />
+                        </svg>
+
+                    </button>
+
+                    <div class="input-group ms-2 ">
+                        <input type="text"
+                            class="  searchs form-control form-control-lg text-muted border-primary shadow-none border-2"
+                            placeholder="Bus No.TN22bn2382">
+                    </div>
+
+                    <button type="button" class="btn cancelbtn border-0" data-bs-dismiss="modal">Cancel</button>
+
+
+                </div>
+                <div class="modal-body">
+
+                    <div class="search-content">
+                        ....
+                    </div>
+                    <div class="qrcontent d-none">
+                        <div id="reader"></div>
+                        <div id="result"> </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="registermodal" tabindex="-1" aria-labelledby="register" aria-hidden="true">
+        <div class="modal-dialog modal-full modal-dialog-centered ">
+            <div class="modal-content   d-flex justify-content-center align-items-center ">
+                <div class="modal-header">
+                    <button class="form-btn btn  btn-register  border-0   shadow-none"
+                        data-target="register">Register</button>
+                    <button class="form-btn btn  btn-login   border-0   shadow-none" data-target="login">Login</button>
+                </div>
+                <div class="modal-body w-100 h-100 row d-flex justify-content-center align-items-center ">
+                    <div class="col-lg-6 d-none d-lg-block d-flex justify-content-center align-items-center">
+                        <div class="register-image d-flex justify-content-center align-items-center"
+                            id="register-image">
+
+                            <img src="{% static 'image/login1.svg' %}" width="400" height="400" alt="Registerimage">
+                        </div>
+                        <div class="login-image d-flex justify-content-center align-items-center" id="login-image">
+                            <img src="{% static 'image/Mobile-login.svg' %}" width="400" height="400" alt="Loginimage">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12    d-flex justify-content-center align-items-center">
+                        <div class="form register d-flex justify-content-center align-items-center"
+                            style="flex-direction: column;" id="register">
+                            <form action="{% url 'user:home' %}" method="post">
+                                {%csrf_token%}
+                                <div class=" mb-4 form-floating">
+                                    <input type="text"
+                                        class="form-control shadow-none border-0 border-bottom border-dark border-2 rounded-0"
+                                        id="registerusername" name="username" placeholder="" required> 
+                                    <label for="username">Username</label>
+                                </div>
+                                
+                                <div class="mb-4 form-floating">
+                                    <input type="email"
+                                        class="form-control border-0 border-dark rounded-0 border-bottom border-2 shadow-none"
+                                        id="email" name="email" placeholder="" required />
+                                    <label for="email" class="form-label">Email</label>
+                                </div>
+
+                                
+
+                                <div class="mb-4 form-floating">
+                                    <input type="password"
+                                        class="form-control border-0 border-dark rounded-0 border-bottom border-2 shadow-none"
+                                        id="registerpassword" name="password" placeholder="" required />
+                                    <label for="password" class="form-label">Password</label>
+                                </div>
+                                <div class="mb-4 form-floating">
+                                    <input type="password"
+                                        class="form-control border-0 border-dark rounded-0 border-bottom border-2 shadow-none"
+                                        id="confirmpassword" name="confirmpassword" placeholder="" required />
+                                    <label for="confirmpassword" class="form-label">Confirm Password</label>
+                                </div>
+                                <div class="mb-4 ">
+                                    <input type="submit" class=" w-100 btn register-btn" value="Register">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form login  d-flex justify-content-center align-items-center"
+                            style="flex-direction: column;" id="login">
+
+                            <form action="{% url 'user:login' %}" method="post" id="loginForm">
+
+                                {%csrf_token%}
+                                <div class=" mb-4 form-floating">
+                                    <input type="text"
+                                        class="form-control shadow-none border-0 border-bottom border-dark border-2 rounded-0"
+                                        id="username" name="username" placeholder="">
+                                    <label for="username">Username</label>
+                                </div>
+
+                                <div class="mb-4 form-floating">
+                                    <input type="password"
+                                        class="form-control border-0 border-dark rounded-0 border-bottom border-2 shadow-none"
+                                        id="password" name="password" placeholder="" required />
+                                    <label for="password" class="form-label">Password</label>
+                                    <div id="errorContainer" class="mt-1" style="color: red;"></div>
+
+                                </div>
+
+                                <div class="mb-4 ">
+                                    <input type="submit" class=" w-100 btn login-btn" value="Login">
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').submit(function (e) {
+                e.preventDefault(); // Prevent the form from submitting traditionally
+
+                // Fetch API to handle login
+                fetch('/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}' // Make sure to include the CSRF token
+                    },
+                    body: new URLSearchParams(new FormData(this))
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === '100') {
+                            // Redirect or perform any other actions on successful login
+                            window.location.href = "{% url 'user:home' %}";
+                        } else if (data.status === 200) {
+                            registerModal.show();
+                        }
+                        else {
+                            $('#errorContainer').text(data.error_message);
+                            // Handle failed login (show error messages, etc.)
+                            console.log("login failed");
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+        {% if show_login_modal %}
+        var registerModal = new bootstrap.Modal(document.getElementById('registermodal'));
+        registerModal.show();
+        {% endif %}
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+    <script src="{% static 'js/action.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/qrcode.js' %}"></script>
+    
+
+
+
+    {%block content %}
+
+    {%endblock%}
+
+
+</body>
+
+</html>
