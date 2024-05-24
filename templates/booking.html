@@ -39,7 +39,6 @@
 
         <div class="d-flex justidy-content-center align-items-center   row">
             <div class="col-12 ">
-            
                 <div class="d-flex mb-2 justidy-content-center align-items-center " style="flex-direction: column;">
                     {% for bus in bus %}
                     <h5>Bus no: {{bus.bus_no}}</h5>
@@ -76,7 +75,7 @@
                    
                     <div class="form-group mb-2">
                         <label for="ticket">Ticket</label>
-                        <input type="number" class="form-control" id="ticket" required min="1" pattern="\d+" title="Please enter a positive integer">
+                        <input type="number" class="form-control" id="ticket" required min="1"  pattern="\d+" title="Please enter a positive integer">
 
                         <!-- <input type="number" class="form-control" id="seats" required > -->
                     </div>
@@ -111,8 +110,6 @@
                         <select class="form-control" id="to">
                             {% for stop in stops reversed%}
                             <option>{{stop.stopname}}</option>
-                            
-
                             {%endfor%}
                             <option>{{travel.start_place}}</option>
                         </select>
@@ -131,6 +128,9 @@
                         <p  disabled class="form-control" id="price">₹0</p>
                     </div>
                     <input type="submit" value="Pay" class="btn w-100 price-btn">
+                    <div id="paypal-button-container"></div>
+    <p id="result-message"></p>
+    
                 </form>
                 {%endif%}
 
@@ -144,7 +144,11 @@
 </div>
 <script src="{% static 'js/options.js' %}"></script>
 
+
 <script>
+    
+
+    
     var originalStopkm = [
         {% for stop in stops %}
             {{ stop.km }},
@@ -278,18 +282,32 @@
         
     }
 }
-        
-        
-        var seats = $('#ticket').val();
-        var price;
-        if(tokm>10)
-        {
-                         price=seats*15;
-        }else if(tokm<=10){
-             price=seats*10;
-        }
-        document.getElementById('price').innerHTML = "₹"+ price;
 
+        
+var seats = $('#ticket').val() ? $('#ticket').val() : 0;
+console.log("to kilometer   fff",tokm)
+        var price;
+        
+
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: {
+                'tokm':tokm,
+                'seats': seats,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'  // Include CSRF token for security
+            },
+            success: function(response) {
+                // Handle the response from Django view
+        document.getElementById('price').innerHTML = "₹"+ response.price;
+    console.log(response.price);
+            },
+            error: function(xhr, status, error) {
+                // Handle errors
+                console.error('Error:', error);
+            }
+        });
+        
 
 
         });

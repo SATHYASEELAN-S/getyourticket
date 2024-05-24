@@ -16,6 +16,7 @@ class Travelinfo(models.Model):
     start_place=models.CharField(max_length=100)
     destination=models.CharField(max_length=100)
     km=models.IntegerField()
+    min_price=models.IntegerField()
     reverse=models.BooleanField(blank=True,default=False)
     bus_no=models.ForeignKey(BusInfo,on_delete=models.CASCADE)
 

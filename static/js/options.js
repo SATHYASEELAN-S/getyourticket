@@ -1,6 +1,6 @@
 
 var originalToOptions = Array.from(document.getElementById("to").options);
-
+console.log(originalToOptions);
 function updateOptions() {
     
     var toSelect = document.getElementById("to");

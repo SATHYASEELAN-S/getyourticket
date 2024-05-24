@@ -1,13 +1,17 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 
 from django.contrib.auth.models import auth
 # Create your views here.
 from django.http import HttpResponse
 from django.contrib.auth import login,logout,authenticate
+from ticket.models import BusInfo,Travelinfo
 from user.models import Userprofileinfo
 from user.forms import userFrom,UserprofileinfoForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
+from django.http import JsonResponse
+
 # def home(request):
 #     # userform=userFrom()
 #     # profileform=UserprofileinfoForm()
@@ -43,10 +47,62 @@ from django.contrib.auth.decorators import login_required
 #                 return HttpResponse("error Occured ")
     
 #     return render(request,'register.html',{"user":userform,"profileform":profileform,'register':register})
-@login_required
+
+def search(request):
+
+     if request.method=="POST": 
+        print('search here ')
+        try:
+            
+            busno = request.POST.get('busno')
+            bus_info = get_object_or_404(BusInfo, bus_no=busno)
+            
+            bus_info_queryset = BusInfo.objects.filter(bus_no=busno)
+            travel = Travelinfo.objects.filter(bus_no=bus_info)
+        
+            
+            bus_info_json = serialize('json', bus_info_queryset)
+            travel_json=serialize('json',travel)
+
+        except:
+            return JsonResponse({'success':False})
+
+        
+        # Return JSON response
+        return JsonResponse({'success': True, 'message': 'Received busno successfully', 'bus_info': bus_info_json,'travel':travel_json})
+
+
+
+
+# @login_required
 def home(request):
 
-    if request.method=="POST":
+    if request.method=="POST": 
+
+#         try:
+            
+#             busno = request.POST.get('busno')
+#             bus_info = get_object_or_404(BusInfo, bus_no=busno)
+            
+#             bus_info_queryset = BusInfo.objects.filter(bus_no=busno)
+#             travel = Travelinfo.objects.filter(bus_no=bus_info)
+        
+            
+#             bus_info_json = serialize('json', bus_info_queryset)
+#             travel_json=serialize('json',travel)
+
+#         except:
+#             return JsonResponse({'success':False})
+
+        
+#         # Return JSON response
+#         return JsonResponse({'success': True, 'message': 'Received busno successfully', 'bus_info': bus_info_json,'travel':travel_json})
+
+
+
+
+
+
         username=request.POST.get("username")
         email=request.POST.get("email")
         password=request.POST.get("password")
@@ -61,12 +117,12 @@ def home(request):
             return HttpResponse("user exits")
 
     return render(request,'main.html')
+
 @login_required
 def logoutuser(request):
     auth.logout(request)
     return redirect("user:home")
 
-from django.http import JsonResponse
 
 def loginuser(request):
     print(type(request))
@@ -90,6 +146,3 @@ def loginuser(request):
     return render(request, 'main.html', {'show_login_modal': True})
 
 
-@login_required
-def com(request):
-    return HttpResponse("hello")

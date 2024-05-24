@@ -38,11 +38,13 @@
     font-size: 25px;
     font-weight: 700;
   }
-  p{
-    font-size: 17px;
-    font-weight: 300;
-  } */
+   */
 
+   p{
+    font-size: 17px !important;
+    font-weight: 500 !important;
+
+  }
 
 /* register and login*/
 
@@ -53,6 +55,7 @@ h5{
 }
 
 
+/* modal for register login start */
 
 
 .modal-full {
@@ -92,9 +95,34 @@ h5{
       height: 90vh !important;
       border: none !important;
       border-radius: 20px !important;
-  }
-  
+    position: relative;
+    }
+
+
 }
+@media  (max-height:628px) {
+  .modal-full {
+      width: 95vw !important;
+      max-width: 100% !important;
+      margin: auto !important;
+      /* background-color: black !important; */
+  }
+  .modal-full .modal-content {
+      height: auto !important;
+      border: none !important;
+      border-radius: 20px !important;
+
+
+    /* position: relative; */
+    }
+}
+
+/* modal for register login end */
+
+
+
+
+
 
   /* navbar */
   .navbar{
